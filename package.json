@@ -1,0 +1,38 @@
+{
+  "name": "movie-api",
+  "version": "1.0.0",
+  "description": "SQLite-backed movie catalogue API.",
+  "private": true,
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "test": "node --import tsx --test tests/**/*.test.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "helmet": "^8.1.0",
+    "morgan": "^1.10.0",
+    "zod": "^3.25.20"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.15.19",
+    "@types/supertest": "^6.0.3",
+    "supertest": "^7.1.1",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
