@@ -24,6 +24,12 @@ MOVIES_DB_PATH=/absolute/path/to/movies.db
 RATINGS_DB_PATH=/absolute/path/to/ratings.db
 ```
 
+To create local demo databases for endpoint screenshots:
+
+```bash
+npm run seed:demo
+```
+
 ## Run
 
 ```bash
@@ -51,6 +57,15 @@ GET /api/v1/movies/genre/:genre?page=1
 ```
 
 List endpoints return 50 records per page. `page` is one-based.
+
+## Endpoint Screenshots
+
+Run the service, open `requests.http` in VS Code, and send each request with the REST Client extension.
+
+```bash
+npm run seed:demo
+npm run dev
+```
 
 ## Checks
 

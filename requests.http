@@ -1,0 +1,19 @@
+@baseUrl = http://localhost:3000
+
+### Health
+GET {{baseUrl}}/health
+
+### List movies
+GET {{baseUrl}}/api/v1/movies?page=1
+
+### Movie details
+GET {{baseUrl}}/api/v1/movies/tt0000001
+
+### Movies by year
+GET {{baseUrl}}/api/v1/movies/year/1999?page=1&sort=asc
+
+### Movies by year descending
+GET {{baseUrl}}/api/v1/movies/year/1999?page=1&sort=desc
+
+### Movies by genre
+GET {{baseUrl}}/api/v1/movies/genre/Action?page=1

@@ -3,10 +3,19 @@ import { z } from "zod";
 import type { MovieService } from "./movieService.js";
 import type { SortOrder } from "./movieTypes.js";
 
-const pageSchema = z.coerce.number().int().min(1).default(1);
+const pageSchema = z.coerce.number().int().min(1).max(10_000).default(1);
 const yearSchema = z.coerce.number().int().min(1878).max(3000);
-const imdbIdSchema = z.string().trim().min(1);
-const genreSchema = z.string().trim().min(1);
+const imdbIdSchema = z
+  .string()
+  .trim()
+  .regex(/^tt\d{7,10}$/i)
+  .transform((value) => value.toLowerCase());
+const genreSchema = z
+  .string()
+  .trim()
+  .min(1)
+  .max(80)
+  .regex(/^[a-zA-Z0-9][a-zA-Z0-9 &.,'/:+-]*$/);
 
 const sortSchema = z
   .preprocess(

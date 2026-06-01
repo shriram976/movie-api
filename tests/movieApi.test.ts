@@ -96,6 +96,28 @@ describe("Movie API", () => {
     assert.equal(response.body.error.code, "invalid_request");
   });
 
+  it("rejects invalid page values", async () => {
+    const response = await request(app).get("/api/v1/movies?page=0").expect(400);
+
+    assert.equal(response.body.error.code, "invalid_request");
+  });
+
+  it("rejects malformed imdb ids", async () => {
+    const response = await request(app)
+      .get("/api/v1/movies/not-an-imdb-id")
+      .expect(400);
+
+    assert.equal(response.body.error.code, "invalid_request");
+  });
+
+  it("rejects malformed genre filters", async () => {
+    const response = await request(app)
+      .get("/api/v1/movies/genre/Action%25%25")
+      .expect(400);
+
+    assert.equal(response.body.error.code, "invalid_request");
+  });
+
   it("lists movies by genre", async () => {
     const response = await request(app)
       .get("/api/v1/movies/genre/Action")
