@@ -119,16 +119,16 @@ export function resolveMovieSchema(db: DatabaseConnection): MovieSchema {
 function findTable(
   db: DatabaseConnection,
   schema: string,
-  candidates: string[]
+  expectedNames: string[]
 ): string {
   const tables = getTables(db, schema);
-  const table = tables.find((candidate) =>
-    candidates.some((name) => normalize(name) === normalize(candidate.name))
+  const table = tables.find((tableInfo) =>
+    expectedNames.some((name) => normalize(name) === normalize(tableInfo.name))
   );
 
   if (!table) {
     throw new Error(
-      `Could not find table ${candidates.join(" or ")} in ${schema} database`
+      `Could not find table ${expectedNames.join(" or ")} in ${schema} database`
     );
   }
 
@@ -138,10 +138,10 @@ function findTable(
 function hasTable(
   db: DatabaseConnection,
   schema: string,
-  candidates: string[]
+  expectedNames: string[]
 ): boolean {
   return getTables(db, schema).some((table) =>
-    candidates.some((name) => normalize(name) === normalize(table.name))
+    expectedNames.some((name) => normalize(name) === normalize(table.name))
   );
 }
 
@@ -163,11 +163,11 @@ function getColumns(
     .all() as SqliteColumn[];
 }
 
-function requiredColumn(columns: SqliteColumn[], candidates: string[]): string {
-  const column = optionalColumn(columns, candidates);
+function requiredColumn(columns: SqliteColumn[], expectedNames: string[]): string {
+  const column = optionalColumn(columns, expectedNames);
 
   if (!column) {
-    throw new Error(`Missing required column: ${candidates.join(" or ")}`);
+    throw new Error(`Missing required column: ${expectedNames.join(" or ")}`);
   }
 
   return column;
@@ -175,11 +175,11 @@ function requiredColumn(columns: SqliteColumn[], candidates: string[]): string {
 
 function optionalColumn(
   columns: SqliteColumn[],
-  candidates: string[]
+  expectedNames: string[]
 ): string | null {
   return (
     columns.find((column) =>
-      candidates.some((candidate) => normalize(candidate) === normalize(column.name))
+      expectedNames.some((name) => normalize(name) === normalize(column.name))
     )?.name ?? null
   );
 }
